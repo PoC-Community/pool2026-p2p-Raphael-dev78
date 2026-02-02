@@ -47,8 +47,12 @@ contract SmartContract {
     }
 
     modifier onlyOwner() {
-        require(msg.sender == owner, "Not the owner");
+        _onlyOwner();
         _;
+    }
+
+    function _onlyOwner() internal view {
+        require(msg.sender == owner, "Not the owner");
     }
 
     /**
@@ -95,5 +99,20 @@ contract SmartContract {
 
     function completeHalfAnswerOfLife() public onlyOwner {
         halfAnswerOfLife += 21;
+    }
+
+    /**
+     * @notice Returns keccak256 hash of a message
+     */
+    function hashMyMessage(string calldata _message) public pure returns (bytes32) {
+        bytes32 result;
+        assembly {
+            let len := calldataload(_message.offset)
+            let ptr := mload(0x40)
+            calldatacopy(ptr, add(_message.offset, 0x20), len)
+            result := keccak256(ptr, len)
+            mstore(0x40, add(ptr, and(add(len, 0x3f), not(0x1f))))
+        }
+        return result;
     }
 }

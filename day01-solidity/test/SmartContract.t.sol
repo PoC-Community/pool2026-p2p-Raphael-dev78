@@ -1,8 +1,8 @@
 // SPDX-License-Identifier: MIT
 pragma solidity ^0.8.20;
 
-import "forge-std/Test.sol";
-import "../src/SmartContract.sol";
+import {Test} from "forge-std/Test.sol";
+import {SmartContract} from "../src/SmartContract.sol";
 
 contract SmartContractHelper is SmartContract {
     // Expose internal functions/variables as public for testing
