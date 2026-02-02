@@ -43,4 +43,9 @@ contract ProfileSystem {
             lastUpdated: block.timestamp
         });
     }
+
+    function levelUp() external onlyRegistered {
+        profiles[msg.sender].level += 1;
+        profiles[msg.sender].lastUpdated = block.timestamp;
+    }
 }
