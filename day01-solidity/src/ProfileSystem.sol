@@ -16,4 +16,15 @@ contract ProfileSystem {
     error UserAlreadyExists();
     error EmptyUsername();
     error UserNotRegistered();
+
+    modifier onlyRegistered() {
+        _onlyRegistered();
+        _;
+    }
+
+    function _onlyRegistered() internal view {
+        if (profiles[msg.sender].level == 0) {
+            revert UserNotRegistered();
+        }
+    }
 }
