@@ -2,7 +2,7 @@
 pragma solidity ^0.8.20;
 
 contract SmartContract {
-
+    address private owner;
     uint256 public halfAnswerOfLife = 21;
     address public myEthereumContractAddress = address(this);
     address public myEthereumAddress = msg.sender;
@@ -41,6 +41,15 @@ contract SmartContract {
         city: "London",
         role: RoleEnum.TEACHER
     });
+
+    constructor() {
+        owner = msg.sender;
+    }
+
+    modifier onlyOwner() {
+        require(msg.sender == owner, "Not the owner");
+        _;
+    }
 
     /**
      * @notice Returns halfAnswerOfLife
@@ -82,5 +91,9 @@ contract SmartContract {
      */
     function getMyFullName() public view returns (string memory) {
         return string(abi.encodePacked(myInformations.firstName, " ", myInformations.lastName));
+    }
+
+    function completeHalfAnswerOfLife() public onlyOwner {
+        halfAnswerOfLife += 21;
     }
 }
