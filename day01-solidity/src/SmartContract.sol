@@ -41,4 +41,32 @@ contract SmartContract {
         city: "London",
         role: RoleEnum.TEACHER
     });
+
+    /**
+     * @notice Returns halfAnswerOfLife
+     */
+    function getHalfAnswerOfLife() public view returns (uint256) {
+        return halfAnswerOfLife;
+    }
+
+    /**
+     * @notice Returns the contract address (internal)
+     */
+    function _getMyEthereumContractAddress() internal view returns (address) {
+        return myEthereumContractAddress;
+    }
+
+    /**
+     * @notice Returns PoCIsWhat (external only)
+     */
+    function getpoCIsWhat() external view returns (string memory) {
+        return poCIsWhat;
+    }
+
+    /**
+     * @notice Sets _areYouABadPerson (internal)
+     */
+    function _setAreYouABadPerson(bool _value) internal {
+        _areYouABadPerson = _value;
+    }
 }
