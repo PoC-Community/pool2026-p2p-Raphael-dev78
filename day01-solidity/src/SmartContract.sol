@@ -18,6 +18,7 @@ contract SmartContract {
     mapping(address => uint256) public balances;
 
     event BalanceUpdated(address indexed user, uint256 newBalance);
+    error InsufficientBalance(uint256 available, uint256 requested);
 
     enum RoleEnum { STUDENT, TEACHER }
 
@@ -145,7 +146,9 @@ contract SmartContract {
      * @notice Withdraws ETH from caller balance
      */
     function withdrawFromBalance(uint256 _amount) public {
-        require(balances[msg.sender] >= _amount, "Insufficient balance");
+        if (balances[msg.sender] < _amount) {
+            revert InsufficientBalance(balances[msg.sender], _amount);
+        }
         balances[msg.sender] -= _amount;
         emit BalanceUpdated(msg.sender, balances[msg.sender]);
         (bool success, ) = payable(msg.sender).call{value: _amount}("");
