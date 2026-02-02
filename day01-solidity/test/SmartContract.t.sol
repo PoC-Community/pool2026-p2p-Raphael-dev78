@@ -3,6 +3,7 @@ pragma solidity ^0.8.20;
 
 import {Test} from "forge-std/Test.sol";
 import {SmartContract} from "../src/SmartContract.sol";
+import {ISmartContract} from "../src/interfaces/ISmartContract.sol";
 
 contract SmartContractHelper is SmartContract {
     // Expose internal functions/variables as public for testing
@@ -32,7 +33,7 @@ contract SmartContractTest is Test {
             string memory lastName, 
             uint8 age, 
             string memory city, 
-            SmartContract.RoleEnum role
+            ISmartContract.RoleEnum role
         ) = myContract.myInformations();
 
         assertEq(firstName, "Raphael");
@@ -40,6 +41,6 @@ contract SmartContractTest is Test {
         assertEq(age, 25);
         assertEq(city, "Paris");
         // Enum value STUDENT should correspond to 0
-        assertTrue(role == SmartContract.RoleEnum.STUDENT);
+        assertTrue(role == ISmartContract.RoleEnum.STUDENT);
     }
 }

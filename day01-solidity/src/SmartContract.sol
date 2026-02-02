@@ -1,7 +1,9 @@
 // SPDX-License-Identifier: MIT
 pragma solidity ^0.8.20;
 
-contract SmartContract {
+import {ISmartContract} from "./interfaces/ISmartContract.sol";
+
+contract SmartContract is ISmartContract {
     address private owner;
     uint256 public halfAnswerOfLife = 21;
     address public myEthereumContractAddress = address(this);
@@ -17,33 +19,20 @@ contract SmartContract {
     string[5] public myPhoneNumber;
     mapping(address => uint256) public balances;
 
-    event BalanceUpdated(address indexed user, uint256 newBalance);
-    error InsufficientBalance(uint256 available, uint256 requested);
-
-    enum RoleEnum { STUDENT, TEACHER }
-
-    struct Informations {
-        string firstName;
-        string lastName;
-        uint8 age;
-        string city;
-        RoleEnum role;
-    }
-
-    Informations public myInformations = Informations({
+    ISmartContract.Informations public myInformations = ISmartContract.Informations({
         firstName: "Raphael",
         lastName: "Unknown",
         age: 25,
         city: "Paris",
-        role: RoleEnum.STUDENT
+        role: ISmartContract.RoleEnum.STUDENT
     });
 
-    Informations public myTeacher = Informations({
+    ISmartContract.Informations public myTeacher = ISmartContract.Informations({
         firstName: "Alice",
         lastName: "Wonderland",
         age: 30,
         city: "London",
-        role: RoleEnum.TEACHER
+        role: ISmartContract.RoleEnum.TEACHER
     });
 
     constructor() {
@@ -147,7 +136,7 @@ contract SmartContract {
      */
     function withdrawFromBalance(uint256 _amount) public {
         if (balances[msg.sender] < _amount) {
-            revert InsufficientBalance(balances[msg.sender], _amount);
+            revert ISmartContract.InsufficientBalance(balances[msg.sender], _amount);
         }
         balances[msg.sender] -= _amount;
         emit BalanceUpdated(msg.sender, balances[msg.sender]);
