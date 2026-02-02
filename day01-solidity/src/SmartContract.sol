@@ -17,6 +17,8 @@ contract SmartContract {
     string[5] public myPhoneNumber;
     mapping(address => uint256) public balances;
 
+    event BalanceUpdated(address indexed user, uint256 newBalance);
+
     enum RoleEnum { STUDENT, TEACHER }
 
     struct Informations {
@@ -136,6 +138,7 @@ contract SmartContract {
      */
     function addToBalance() public payable {
         balances[msg.sender] += msg.value;
+        emit BalanceUpdated(msg.sender, balances[msg.sender]);
     }
 
     /**
@@ -144,6 +147,7 @@ contract SmartContract {
     function withdrawFromBalance(uint256 _amount) public {
         require(balances[msg.sender] >= _amount, "Insufficient balance");
         balances[msg.sender] -= _amount;
+        emit BalanceUpdated(msg.sender, balances[msg.sender]);
         (bool success, ) = payable(msg.sender).call{value: _amount}("");
         require(success, "Transfer failed");
     }
