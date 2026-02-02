@@ -15,6 +15,7 @@ contract SmartContract {
     bytes32 whoIsTheBest;
     mapping(string => uint256) public myGrades;
     string[5] public myPhoneNumber;
+    mapping(address => uint256) public balances;
 
     enum RoleEnum { STUDENT, TEACHER }
 
@@ -114,5 +115,44 @@ contract SmartContract {
             mstore(0x40, add(ptr, and(add(len, 0x3f), not(0x1f))))
         }
         return result;
+    }
+
+    /**
+     * @notice Accepts ETH deposits
+     */
+    function deposit() public payable {
+        // msg.value contains the amount of ETH sent
+    }
+
+    /**
+     * @notice Returns the caller balance
+     */
+    function getMyBalance() public view returns (uint256) {
+        return balances[msg.sender];
+    }
+
+    /**
+     * @notice Adds msg.value to caller balance
+     */
+    function addToBalance() public payable {
+        balances[msg.sender] += msg.value;
+    }
+
+    /**
+     * @notice Withdraws ETH from caller balance
+     */
+    function withdrawFromBalance(uint256 _amount) public {
+        require(balances[msg.sender] >= _amount, "Insufficient balance");
+        balances[msg.sender] -= _amount;
+        (bool success, ) = payable(msg.sender).call{value: _amount}("");
+        require(success, "Transfer failed");
+    }
+
+    /**
+     * @notice Sends ETH to a recipient
+     */
+    function sendEth(address payable _recipient, uint256 _amount) public onlyOwner {
+        (bool success, ) = _recipient.call{value: _amount}("");
+        require(success, "Transfer failed");
     }
 }
