@@ -1,0 +1,14 @@
+{
+  "name": "Frank the Unholy",
+  "description": "Rare Apothic Boss",
+  "image": "ipfs://bafkreicf53s4o7bqyfg6a5ucdo7pwzk477nkdkpb7a54s66hztw5qqf7tm/frank-the-unholy.png",
+  "attributes": [
+    { "trait_type": "Rarity", "value": "Rare" },
+    { "trait_type": "Type", "value": "Apothic Boss" },
+    { "trait_type": "Health", "value": "70/81" },
+    { "trait_type": "Effect", "value": "Fire Resistance" },
+    { "trait_type": "Effect Duration", "value": "29826:09:10" },
+    { "trait_type": "Effect", "value": "Glowing" },
+    { "trait_type": "Effect Duration", "value": "02:38" }
+  ]
+}
