@@ -1,0 +1,8 @@
+{
+  "name": "Pool NFT #2",
+  "description": "My second NFT",
+  "image": "ipfs://bafkreigi7653mp2uku5msij4qekuw76o7vxdfnzpgk52q7d237df34a3yy/image2.png",
+  "attributes": [
+    { "trait_type": "Rarity", "value": "Legendary" }
+  ]
+}
