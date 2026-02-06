@@ -13,10 +13,11 @@ contract PoolTokenTest is Test {
 
     function setUp() public {
         token = new PoolToken(1_000 ether);
-        token.transfer(alice, 200 ether);
+        bool ok = token.transfer(alice, 200 ether);
+        assertTrue(ok);
     }
 
-    function testVotesInitiallyZeroWithoutDelegation() public {
+    function testVotesInitiallyZeroWithoutDelegation() public view {
         assertEq(token.getVotes(alice), 0);
     }
 
@@ -37,7 +38,8 @@ contract PoolTokenTest is Test {
         uint256 snapshotBlock = block.number - 1;
 
         vm.startPrank(alice);
-        token.transfer(bob, 50 ether);
+        bool ok = token.transfer(bob, 50 ether);
+        assertTrue(ok);
         vm.stopPrank();
 
         assertEq(token.getVotes(alice), 150 ether);
